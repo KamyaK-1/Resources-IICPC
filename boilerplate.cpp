@@ -12,12 +12,9 @@ using namespace std;
 #define debug(...)
 #define debugArr(...)
 #endif
-
-
 #define ordered_set tree<int, null_type,less<int >, rb_tree_tag,tree_order_statistics_node_update>
 #define ordered_multiset tree<int, null_type, less_equal<int>, rb_tree_tag, tree_order_statistics_node_update>
 // find_by_order, order_of_key
-
 template<typename T>
 int log2_floor(T i)
 {
@@ -42,6 +39,26 @@ int gcd(int a, int b, int& x, int& y) {
 
 int inv(int a, int m) {
     return a <= 1 ? a : m - (long long)(m/a) * inv(m % a, m) % m;
+}
+
+
+vector<int> z_function(string s) {
+    int n = s.size();
+    vector<int> z(n);
+    int l = 0, r = 0;
+    for(int i = 1; i < n; i++) {
+        if(i < r) {
+            z[i] = min(r - i, z[i - l]);
+        }
+        while(i + z[i] < n && s[z[i]] == s[i + z[i]]) {
+            z[i]++;
+        }
+        if(i + z[i] > r) {
+            l = i;
+            r = i + z[i];
+        }
+    }
+    return z;
 }
 
 struct dsu{
